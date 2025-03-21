@@ -111,7 +111,7 @@ git clone https://github.com/tonrepo/LUNA_PERLA.git
 
 ## 📞 Support
 
-En cas de problème, contacter moi directement via <malekghabi129@gmail.com> ou  via le canal de discussion GitHub
+- En cas de problème, contacter moi directement via <malekghabi129@gmail.com> ou  via le canal de discussion GitHub
 ---
 
 ## 📜 Licence
