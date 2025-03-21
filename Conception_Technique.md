@@ -40,22 +40,20 @@ Le projet **Luna Perla** est structuré en plusieurs parties :
 ## 📊 Diagrammes UML
 
 ### 📌 Modèle relationnel de la base de données
-
-*(Ajoutez ici une capture d’écran du modèle de la base de données)*
-
 ![IMG_736557BEBC02-1](https://github.com/user-attachments/assets/383bd490-a21f-46e5-a0c7-bf2697c299e2)
-![IMG_1067](https://github.com/user-attachments/assets/8b8c46e3-ed3b-4731-a1d4-63475f6a2919)
 
 ### 📌 Diagrammes d'héritage
+![IMG_1067](https://github.com/user-attachments/assets/8b8c46e3-ed3b-4731-a1d4-63475f6a2919)
+
+
 
 ---
 
 ## 🎨 Maquettes et Captures d’écran
 
 ### 🔹 Wireframes et Maquette
-
-🔗 [📄 Voir la maquette simplifiée du site](./Downloads/Wireframe%20Of%20Luna%20Perla%20Partie%203.pdf)
-🔗 [📄 Voir la maquette finale du site](./wireframe%20of%20luna%20perla.pdf)
+- 🔗 [📄 Télécharger la maquette simplifiée](https://github.com/malekghabi1607/Luna_Perla/raw/main/docs/wireframe_simplifie.pdf)  
+- 🔗 [📄 Télécharger la maquette finale](https://github.com/malekghabi1607/Luna_Perla/raw/main/docs/wireframe_final.pdf)
 
 ### 🔹 Captures d’écran de l’application
 
@@ -69,10 +67,15 @@ Le projet **Luna Perla** est structuré en plusieurs parties :
 
 ---
 
-## 🔄 Flux de données
+### 🔄 Flux de données
 
-*(Ajoutez ici une explication sur la circulation des données entre les composants du projet, illustrée par un schéma si possible)*
+Dans notre projet **Luna Perla**, le flux de données suit une architecture classique **client-serveur**, où les informations circulent entre le **Front-End** (interface utilisateur), le **Back-End PHP** (traitement) et la **base de données PostgreSQL**.
+
+#### 📥 Exemple d’un parcours utilisateur :
+1. **Le client** (utilisateur) accède au site via son navigateur web.
+2. Il consulte les bijoux disponibles → **le front envoie une requête HTTP**.
+3. Le **Back-End PHP** récupère les données via des requêtes SQL vers la base PostgreSQL.
+4. Les **données des produits** (nom, prix, image, description…) sont renvoyées au Front-End et affichées.
+5. Lors d’un achat ou d’une inscription, le client envoie un formulaire → **PHP traite les données**, vérifie leur validité, puis **les enregistre en base**.
 
 ---
-
-Ce document rassemble toutes les informations techniques du projet **Luna Perla**, nécessaires pour comprendre son architecture et son implémentation. 🚀
