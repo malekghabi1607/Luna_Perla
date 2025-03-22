@@ -109,12 +109,8 @@ function addProduct() {
   if (!stock) return;
 
   // Demande du chemin de l'image (avec une valeur par défaut)
-  var image = prompt("Entrez le chemin de l'image du produit :", "templates/back/images/default.jpg");
+  var image = prompt("Entrez le chemin de l'image du produit :", "templates/back/images/collier-joana-1.jpg");
   if (!image) return;
-
-  // Demande du lien vers la page de détails du produit (avec une valeur par défaut)
-  var detailsLink = prompt("Entrez le lien vers les détails du produit :", "templates/back/bijou.php");
-  if (!detailsLink) return;
 
   // Récupération du tbody du tableau des produits
   var tableBody = document.querySelector("#productsTable tbody");
@@ -150,7 +146,7 @@ function addProduct() {
 
   // Création du lien vers les détails du produit
   var detailsLinkElem = document.createElement("a");
-  detailsLinkElem.href = detailsLink;
+  detailsLinkElem.href = "templates/back/bijou.php";
   detailsLinkElem.className = "btn-details";
   detailsLinkElem.textContent = "Voir le bijou";
   tdAction.appendChild(detailsLinkElem);

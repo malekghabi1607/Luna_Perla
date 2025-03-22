@@ -6,7 +6,7 @@
     <h2 class="simple-login-title">Connexion</h2>
 
     <!-- Formulaire de connexion -->
-    <form id="loginForm" action="../index.php" method="POST" class="simple-login-form">
+    <form id="loginForm" action="<?php echo $racine_path; ?>control/accueil.php" method="POST" class="simple-login-form">
         <!-- Groupe d'input pour l'adresse e-mail -->
         <div class="simple-input-group">
             <label for="email">Adresse e-mail</label>

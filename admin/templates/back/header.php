@@ -34,8 +34,3 @@
         <?php include("menu.php"); ?>
     </header>
 
-    <!-- Inclusion du script JavaScript personnalisé -->
-    <script src="<?php echo $racine_path . 'templates/back/js/script.js'; ?>"></script>
-</body>
-
-</html>
