@@ -1,9 +1,9 @@
 <main>
-    <div class="welcome-container">
-        <h1>Bienvenue sur votre espace personnel</h1>
-        <p>Ceci est votre espace personnel.</p>
-        <p>Vous pouvez gérer vos informations personnelles.</p>
+        <h2>Bienvenue, <?= htmlspecialchars($infos['prenom']) ?> <?= htmlspecialchars($infos['nom']) ?> !</h2>
+        <p><strong>Email :</strong> <?= htmlspecialchars($infos['email']) ?></p>
+        <p><strong>Téléphone :</strong> <?= htmlspecialchars($infos['telephone']) ?></p>
+        <p><strong>Adresse de livraison :</strong> <?= htmlspecialchars($infos['adresse']) ?></p>
 
-        <a href="login.php" class="logout-btn">Se déconnecter</a>
+        <a href="../control/deconnexion.php" class="btn">Se déconnecter</a>
     </div>
 </main>
