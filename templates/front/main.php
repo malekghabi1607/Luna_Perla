@@ -34,19 +34,19 @@
                 <img src="<?php echo $racine_path; ?>templates/front/images/bague-elegante.jpg" alt="Bague élégante">
                 <h3>Bague Élégante</h3>
                 <p>19,99€</p>
-                <a href="<?php echo $racine_path; ?>control/bijou.php?id=4" class="btn">Voir</a>
+                <a href="<?php echo $racine_path; ?>control/bijou.php?id=5" class="btn">Voir</a>
             </div>
             <div class="product">
                 <img src="<?php echo $racine_path; ?>templates/front/images/collier-raffine.jpg" alt="Collier raffiné">
                 <h3>Collier Raffiné</h3>
                 <p>22,99€</p>
-                <a href="<?php echo $racine_path; ?>control/bijou.php?id=5" class="btn">Voir</a>
+                <a href="<?php echo $racine_path; ?>control/bijou.php?id=6" class="btn">Voir</a>
             </div>
             <div class="product">
                 <img src="<?php echo $racine_path; ?>templates/front/images/bracelet-chic.jpg" alt="Bracelet chic">
                 <h3>Bracelet Chic</h3>
                 <p>19,99€</p>
-                <a href="<?php echo $racine_path; ?>control/bijou.php?id=6" class="btn">Voir</a>
+                <a href="<?php echo $racine_path; ?>control/bijou.php?id=4" class="btn">Voir</a>
             </div>
             <div class="product">
                 <img src="<?php echo $racine_path; ?>templates/front/images/collier-joana-1.jpg" alt="Collier Sautoir - JOANA">
