@@ -1,13 +1,25 @@
 <?php
 $titre = 'Mon compte';
-$racine_path = '../'; // Adapter à votre arborescence
+require_once("../model/User_lp.php");
+use bd\User_lp;
 
-$titre = 'Mon compte';
-$racine_path = '../'; // Adapter à votre arborescence
+$racine_path = "../";
+//include($racine_path . "templates/front/header.php");
 
+$userModel = new User_lp();
 
+if (isset($_GET['email'])) {
+    $email = $_GET['email'];
+    $infos = $userModel->getUserByEmail($email);
 
-include($racine_path . 'templates/front/header.php');
-include($racine_path . 'templates/front/compte.php') ;
-include($racine_path . 'templates/front/footer.php');
+    if ($infos) {
+        include($racine_path . "templates/front/compte.php");
+    } else {
+        echo "<p>Utilisateur non trouvé.</p>";
+    }
+} else {
+    echo "<p>Accès refusé. Paramètre manquant.</p>";
+}
+
+include($racine_path . "templates/front/footer.php");
 ?>
