@@ -6,18 +6,22 @@ class Person_lp {
     protected $username;
     protected $password_hash;
     protected $email;
+    protected $role;
+
+
 
     // Constructor
-    public function __construct($id = null, $username = "", $password_hash = "", $email = "") {
+    public function __construct($id = null, $username = "", $password_hash = "", $email = "", $role = "") {
         $this->id = $id;
         $this->username = $username;
         $this->password_hash = $password_hash;
         $this->email = $email;
+        $this->role = $role;
     }
 
     // Magic Getter
     public function __get($property) {
-        if (property_exists($this, $property)) {
+        if (\property_exists($this, $property)) {
             return $this->$property;
         }
     }
@@ -31,7 +35,8 @@ class Person_lp {
 
     // Convert object to string
     public function __toString() {
-        return "Person ID: $this->id, Username: $this->username, Email: $this->email";
+        return "Person ID: $this->id, Username: $this->username, Email: $this->email, Role: $this->role";
+
     }
 }
 ?>
