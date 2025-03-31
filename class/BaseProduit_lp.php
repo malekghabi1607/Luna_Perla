@@ -1,33 +1,101 @@
 <?php
-namespace classe;
+namespace bd;
+
+use \PDO;
+require('../class/BaseProduit_lp.php');
+require('GestionBD.php');
+
+use bd\GestionBD;
 
 class BaseProduit_lp {
-    private $id;
-    private $name;
-    private $multicolor;
-    private $description;
 
-    public function __construct($id = null, $name = "", $multicolor = false, $description = "") {
-        $this->id = $id;
-        $this->name = $name;
-        $this->multicolor = $multicolor;
-        $this->description = $description;
+    /**
+     * Save a new base product (Insert into `base_produit_lp`)
+     */
+    public function saveBaseProduit($baseProduit) {
+        $BD = new GestionBD();
+        $BD->connexion();
+
+        $sql = "INSERT INTO base_produit_lp (name, multicolor, description) VALUES (:name, :multicolor, :description)";
+        $stmt = $BD->pdo->prepare($sql);
+        $result = $stmt->execute([
+            ':name' => $baseProduit->name,
+            ':multicolor' => $baseProduit->multicolor,
+            ':description' => $baseProduit->description,
+            ':baseProduit_id'=> $baseProduit->id,
+
+        ]);
+
+        $BD->deconnexion();
+        return $result;
     }
 
-    public function __get($property) {
-        if (property_exists($this, $property)) {
-            return $this->$property;
-        }
+    /**
+     * Update an existing base product
+     */
+    public function updateBaseProduit($baseProduit) {
+        $BD = new GestionBD();
+        $BD->connexion();
+
+        $sql = "UPDATE base_produit_lp SET name = :name, multicolor = :multicolor, description = :description WHERE id = :id";
+        $stmt = $BD->pdo->prepare($sql);
+        $result = $stmt->execute([
+            ':name' => $baseProduit->name,
+            ':multicolor' => $baseProduit->multicolor,
+            ':description' => $baseProduit->description,
+            ':id' => $baseProduit->id
+        ]);
+
+        $BD->deconnexion();
+        return $result;
     }
 
-    public function __set($property, $value) {
-        if (property_exists($this, $property)) {
-            $this->$property = $value;
-        }
+    /**
+     * Delete a base product by ID
+     */
+    public function deleteBaseProduit($baseProduit_id) {
+        $BD = new GestionBD();
+        $BD->connexion();
+
+        $sql = "DELETE FROM base_produit_lp WHERE id = :baseProduit_id";
+        $stmt = $BD->pdo->prepare($sql);
+        $result = $stmt->execute([':baseProduit_id' => $baseProduit_id]);
+
+        $BD->deconnexion();
+        return $result;
     }
 
-    public function __toString() {
-        return "Base Product: $this->name, Multicolor: " . ($this->multicolor ? "Yes" : "No") . ", Description: $this->description";
+    /**
+     * Get all base products
+     */
+    public function listBaseProduits() {
+        $BD = new GestionBD();
+        $BD->connexion();
+
+        $sql = "SELECT * FROM base_produit_lp";
+        $stat = $BD->pdo->prepare($sql);
+        $stat->execute();
+        $baseProduits = $stat->fetchAll(PDO::FETCH_ASSOC);
+
+        $BD->deconnexion();
+        return $baseProduits;
+    }
+
+    /**
+     * Get a single base product by ID
+     */
+    public function getBaseProduitById($baseProduit_id) {
+        $BD = new GestionBD();
+        $BD->connexion();
+
+        $sql = "SELECT * FROM base_produit_lp WHERE id = :baseProduit_id";
+        $stat = $BD->pdo->prepare($sql);
+        $stat->bindParam(':baseProduit_id', $baseProduit_id);
+        $stat->execute();
+        $baseProduit = $stat->fetch(PDO::FETCH_ASSOC);
+
+        $BD->deconnexion();
+        return $baseProduit;
     }
 }
 ?>
