@@ -21,7 +21,7 @@ class ProduitUserPanier_lp {
     }
 
     public function __set($property, $value) {
-        if (property_exists($this, $property)) {
+        if (\property_exists($this, $property)) {
             $this->$property = $value;
         }
     }
