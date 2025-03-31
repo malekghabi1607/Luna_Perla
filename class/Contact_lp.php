@@ -31,5 +31,12 @@ class Contact_lp {
     public function __toString() {
         return "Contact ID: $this->id, User ID: $this->user_id, Subject: $this->sujet, Message: $this->message, Date Sent: $this->date_envoi";
     }
+
+
+    public function enregistrer($pdo) {
+        $sql = "INSERT INTO contact_lp (user_id, sujet, message, date_envoi) VALUES (?, ?, ?, ?)";
+        $stmt = $pdo->prepare($sql);
+        return $stmt->execute([$this->user_id, $this->sujet, $this->message, $this->date_envoi]);
+    }
 }
 ?>
