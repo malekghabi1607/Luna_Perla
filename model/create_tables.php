@@ -2,69 +2,98 @@
 include 'connexion_db.php';
 
 try {
-    // Table des utilisateurs (clients)
+    // ==========================
+    // 1) TABLE Person_lp (classe parente)
+    // ==========================
+    $sqlPerson = "CREATE TABLE IF NOT EXISTS person_lp (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(100) UNIQUE NOT NULL,
+        password_hash TEXT NOT NULL,
+        email VARCHAR(255) UNIQUE NOT NULL
+    )";
+    $pdo->exec($sqlPerson);
+
+    // ==========================
+    // 2) TABLE User_lp (hérite de Person_lp)
+    // ==========================
     $sqlUser = "CREATE TABLE IF NOT EXISTS user_lp (
-        id_user SERIAL PRIMARY KEY,
-        nom VARCHAR(100) NOT NULL,
-        prenom VARCHAR(100) NOT NULL,
-        email VARCHAR(150) UNIQUE NOT NULL,
-        mot_de_passe VARCHAR(255) NOT NULL,
-        telephone VARCHAR(20) NOT NULL,
-        role VARCHAR(50) DEFAULT 'client' CHECK (role IN ('client', 'admin'))
+        user_id INT PRIMARY KEY REFERENCES person_lp(id) ON DELETE CASCADE,
+        phone VARCHAR(20),
+        shipping_address TEXT
     )";
     $pdo->exec($sqlUser);
 
-    // Table des produits (bijoux)
+    // ==========================
+    // 3) TABLE Admin_lp (hérite de Person_lp)
+    // ==========================
+    $sqlAdmin = "CREATE TABLE IF NOT EXISTS admin_lp (
+        admin_id INT PRIMARY KEY REFERENCES person_lp(id) ON DELETE CASCADE,
+        permissions TEXT NOT NULL,
+        department TEXT NOT NULL
+    )";
+    $pdo->exec($sqlAdmin);
+
+    // ==========================
+    // 4) TABLE Contact_lp (référence User_lp)
+    // ==========================
+    $sqlContact = "CREATE TABLE IF NOT EXISTS contact_lp (
+        id SERIAL PRIMARY KEY,
+        user_id INT NOT NULL REFERENCES user_lp(user_id) ON DELETE CASCADE,
+        sujet VARCHAR(255) NOT NULL,
+        message TEXT,
+        date_envoi TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    $pdo->exec($sqlContact);
+
+    // ==========================
+    // 5) TABLE Collection_lp (Stores Product Collections) ✅ FIXED ORDER
+    // ==========================
+    $sqlCollection = "CREATE TABLE IF NOT EXISTS collection_lp (
+        id SERIAL PRIMARY KEY,
+        collection_name VARCHAR(255) NOT NULL,
+        description TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    $pdo->exec($sqlCollection);
+
+    // ==========================
+    // 6) TABLE BaseProduit_lp (Common Product Attributes)
+    // ==========================
+    $sqlBaseProduit = "CREATE TABLE IF NOT EXISTS base_produit_lp (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        multicolor BOOLEAN DEFAULT FALSE,
+        description TEXT
+    )";
+    $pdo->exec($sqlBaseProduit);
+
+    // ==========================
+    // 7) TABLE Produit_lp (Specific Product - Inherits from BaseProduit_lp)
+    // ==========================
     $sqlProduit = "CREATE TABLE IF NOT EXISTS produit_lp (
-        id_produit SERIAL PRIMARY KEY,
-        nom VARCHAR(255) NOT NULL,
-        description TEXT NOT NULL,
-        prix DECIMAL(10,2) NOT NULL,
-        stock INT DEFAULT 0,
-        image VARCHAR(255),
-        categorie VARCHAR(100) NOT NULL
+        id SERIAL PRIMARY KEY,
+        base_id INT NOT NULL REFERENCES base_produit_lp(id) ON DELETE CASCADE, -- ✅ FIXED CASCADE DELETE
+        collection_id INT REFERENCES collection_lp(id) ON DELETE CASCADE, -- ✅ FIXED CASCADE DELETE
+        specific_name VARCHAR(255),
+        prix DECIMAL(10,2) NOT NULL CHECK (prix > 0),
+        stock INT DEFAULT 0 CHECK (stock >= 0),
+        image BYTEA, -- ✅ Consider changing this to VARCHAR(255) for file path storage
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        availability BOOLEAN DEFAULT TRUE
     )";
     $pdo->exec($sqlProduit);
 
-    // Table des commandes
-    $sqlCommande = "CREATE TABLE IF NOT EXISTS commande_lp (
-        id_commande SERIAL PRIMARY KEY,
-        id_user INT REFERENCES user_lp(id_user) ON DELETE CASCADE,
-        date_commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        statut VARCHAR(50) DEFAULT 'En attente' CHECK (statut IN ('En attente', 'Validée', 'Expédiée', 'Livrée', 'Annulée'))
+    // ==========================
+    // 8) TABLE Produit_user_panier_lp (liaison Produit_lp et User_lp) ✅ FIXED VARIABLE NAME
+    // ==========================
+    $sqlProduitUserPanier = "CREATE TABLE IF NOT EXISTS produit_user_panier_lp (
+        produit_id INT NOT NULL REFERENCES produit_lp(id) ON DELETE CASCADE,
+        user_id INT NOT NULL REFERENCES user_lp(user_id) ON DELETE CASCADE,
+        date_sold TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        sold BOOLEAN DEFAULT FALSE,
+        PRIMARY KEY (produit_id, user_id)
     )";
-    $pdo->exec($sqlCommande);
-
-    // Table des détails des commandes (produits commandés)
-    $sqlDetailsCommande = "CREATE TABLE IF NOT EXISTS details_commande_lp (
-        id_detail SERIAL PRIMARY KEY,
-        id_commande INT REFERENCES commande_lp(id_commande) ON DELETE CASCADE,
-        id_produit INT REFERENCES produit_lp(id_produit) ON DELETE CASCADE,
-        quantite INT NOT NULL CHECK (quantite > 0),
-        prix_unitaire DECIMAL(10,2) NOT NULL
-    )";
-    $pdo->exec($sqlDetailsCommande);
-
-    // Table des paiements
-    $sqlPaiement = "CREATE TABLE IF NOT EXISTS paiement_lp (
-        id_paiement SERIAL PRIMARY KEY,
-        id_commande INT REFERENCES commande_lp(id_commande) ON DELETE CASCADE,
-        montant DECIMAL(10,2) NOT NULL,
-        date_paiement TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        methode_paiement VARCHAR(50) CHECK (methode_paiement IN ('Carte bancaire', 'PayPal', 'Virement'))
-    )";
-    $pdo->exec($sqlPaiement);
-
-    // Table des avis des clients
-    $sqlAvis = "CREATE TABLE IF NOT EXISTS avis_lp (
-        id_avis SERIAL PRIMARY KEY,
-        id_user INT REFERENCES user_lp(id_user) ON DELETE CASCADE,
-        id_produit INT REFERENCES produit_lp(id_produit) ON DELETE CASCADE,
-        note INT CHECK (note BETWEEN 1 AND 5),
-        commentaire TEXT,
-        date_avis TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )";
-    $pdo->exec($sqlAvis);
+    $pdo->exec($sqlProduitUserPanier); // ✅ FIXED VARIABLE NAME
 
     echo "✅ Toutes les tables ont été créées avec succès !";
 
