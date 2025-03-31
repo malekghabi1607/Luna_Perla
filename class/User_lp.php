@@ -11,6 +11,7 @@ class User_lp extends Person_lp {
         parent::__construct($id, $username, $password_hash, $email);
         $this->phone = $phone;
         $this->shipping_address = $shipping_address;
+        $this->pdo = \Connexion::getConnexion();
     }
 
     public function __get($property) {
