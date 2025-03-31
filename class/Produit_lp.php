@@ -2,17 +2,18 @@
 namespace classe;
 
 class Produit_lp {
-    private $id;
-    private $base_id;
-    private $collection_id;
-    private $specific_name;
-    private $prix;
-    private $stock;
-    private $image;
-    private $created_at;
-    private $availability;
+    public $id;
+    public $base_id;
+    public $collection_id;
+    public $specific_name;
+    public $prix;
+    public $stock;
+    public $image;
+    public $created_at;
+    public $availability;
+    public $description;
 
-    public function __construct($id = null, $base_id = null, $collection_id = null, $specific_name = "", $prix = 0.0, $stock = 0, $image = "", $created_at = "", $availability = true) {
+    public function __construct($id = null, $base_id = null, $collection_id = null, $specific_name = "", $prix = 0.0, $stock = 0, $image = "", $created_at = "", $availability = true , $description = "") {
         $this->id = $id;
         $this->base_id = $base_id;
         $this->collection_id = $collection_id;
@@ -22,10 +23,12 @@ class Produit_lp {
         $this->image = $image;
         $this->created_at = $created_at;
         $this->availability = $availability;
+        $this->description = $description;
+
     }
 
     public function __get($property) {
-        if (property_exists($this, $property)) {
+        if (\property_exists($this, $property)) {
             return $this->$property;
         }
     }
