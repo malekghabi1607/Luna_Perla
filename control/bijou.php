@@ -1,7 +1,7 @@
 <?php
 $racine_path = '../';
 $titre = 'Détail du bijou';
-
+/*
 $products = [
     [
         "id" => 1,
@@ -72,12 +72,59 @@ if (!$bijou) {
     header('Location: collection.php');
     exit;
 }
+ */
 
-// Inclure le header
-include($racine_path . 'templates/front/header.php');
 
-// Afficher les détails
-include($racine_path . 'templates/front/bijou.php');
 
-// Inclure le footer
-include($racine_path . 'templates/front/footer.php');
+// On inclut le modèle
+require($racine_path . 'model/Produit_lp.php');
+require($racine_path . 'model/Images_lp.php');
+use bd\Produit_lp; 
+use bd\ImagesProduitLP;
+
+// On crée un objet Produit pour accéder à la BDD
+$produitBD = new Produit_lp();
+$imagesBD = new ImagesProduitLP();
+if (isset($_GET['id'])) {
+    // Récupération du produit par son ID
+    $produit = $produitBD->getProduitById($_GET['id']);
+
+    if ($produit) {
+        $id_produit = $produit->id;
+        $nom_produit = $produit->specific_name;
+        $prix_produit = $produit->prix;
+        $stock_produit = $produit->stock;
+        $description_produit = $produit->description;
+
+        // ✅ Récupérer toutes les images associées au produit
+        $autres_images = $imagesBD->fetchByProduitId($id_produit);
+
+        // ✅ Vérification que l'objet existe et accès correct à la propriété
+        if (!empty($autres_images) && isset($autres_images[0]->image_path)) {
+            $image_produit = $racine_path . $autres_images[0]->image_path;
+        } else {
+            $image_produit = $racine_path . "images/default.jpg";
+        }
+
+        // ✅ Transformation correcte du tableau d'objets en chemins d'images
+        $autres_images = array_map(function($img) use ($racine_path) {
+            return $racine_path . $img->image_path;  // Accès correct à la propriété d'un objet
+        }, $autres_images);
+    } else {
+        echo "Produit introuvable.";
+        exit;
+    }
+}
+
+    // ➤ Affichage des templates
+    include($racine_path . "templates/front/header.php");
+
+    echo '<main>';
+    include($racine_path . "templates/front/bijou.php");
+    
+    echo '</main>';
+
+    include($racine_path . "templates/front/footer.php");
+
+
+?>
