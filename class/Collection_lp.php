@@ -1,97 +1,33 @@
 <?php
-namespace bd;
-
-use \PDO;
-require('../class/Collection_lp.php');
-require('GestionBD.php');
-
-use bd\GestionBD;
+namespace classe;
 
 class Collection_lp {
+    private $id;
+    private $collection_name;
+    private $description;
+    private $created_at;
 
-    /**
-     * Save a new collection (Insert into `collection_lp`)
-     */
-    public function saveCollection($collection) {
-        $BD = new GestionBD();
-        $BD->connexion();
-
-        $sql = "INSERT INTO collection_lp (collection_name, description) VALUES (:collection_name, :description)";
-        $stmt = $BD->pdo->prepare($sql);
-        $result = $stmt->execute([
-            ':collection_name' => $collection->collection_name,
-            ':description' => $collection->description
-        ]);
-
-        $BD->deconnexion();
-        return $result;
+    public function __construct($id = null, $collection_name = "", $description = "", $created_at = "") {
+        $this->id = $id;
+        $this->collection_name = $collection_name;
+        $this->description = $description;
+        $this->created_at = $created_at;
     }
 
-    /**
-     * Update an existing collection
-     */
-    public function updateCollection($collection) {
-        $BD = new GestionBD();
-        $BD->connexion();
-
-        $sql = "UPDATE collection_lp SET collection_name = :collection_name, description = :description WHERE id = :id";
-        $stmt = $BD->pdo->prepare($sql);
-        $result = $stmt->execute([
-            ':collection_name' => $collection->collection_name,
-            ':description' => $collection->description,
-            ':id' => $collection->id
-        ]);
-
-        $BD->deconnexion();
-        return $result;
+    public function __get($property) {
+        if (property_exists($this, $property)) {
+            return $this->$property;
+        }
     }
 
-    /**
-     * Delete a collection by ID
-     */
-    public function deleteCollection($collection_id) {
-        $BD = new GestionBD();
-        $BD->connexion();
-
-        $sql = "DELETE FROM collection_lp WHERE id = :collection_id";
-        $stmt = $BD->pdo->prepare($sql);
-        $result = $stmt->execute([':collection_id' => $collection_id]);
-
-        $BD->deconnexion();
-        return $result;
+    public function __set($property, $value) {
+        if (\property_exists($this, $property)) {
+            $this->$property = $value;
+        }
     }
 
-    /**
-     * Get all collections
-     */
-    public function listCollections() {
-        $BD = new GestionBD();
-        $BD->connexion();
-
-        $sql = "SELECT * FROM collection_lp";
-        $stat = $BD->pdo->prepare($sql);
-        $stat->execute();
-        $collections = $stat->fetchAll(PDO::FETCH_ASSOC);
-
-        $BD->deconnexion();
-        return $collections;
-    }
-
-    /**
-     * Get a single collection by ID
-     */
-    public function getCollectionById($collection_id) {
-        $BD = new GestionBD();
-        $BD->connexion();
-
-        $sql = "SELECT * FROM collection_lp WHERE id = :collection_id";
-        $stat = $BD->pdo->prepare($sql);
-        $stat->bindParam(':collection_id', $collection_id);
-        $stat->execute();
-        $collection = $stat->fetch(PDO::FETCH_ASSOC);
-
-        $BD->deconnexion();
-        return $collection;
+    public function __toString() {
+        return "Collection: $this->collection_name, Created At: $this->created_at";
     }
 }
 ?>
