@@ -1,21 +1,26 @@
 <?php
-/*
- * Fichier principal pour le dashboard (inclusion des éléments restants)
- * Ce fichier définit les données des produits et des utilisateurs, 
- * inclut l'en-tête, affiche le contenu principal via un template, 
- * et termine avec l'inclusion du pied de page.
- */
-
-// Définition du chemin racine et du titre de la page
 $racine_path = '../';
 $titre = 'Dashboard - Produits et Utilisateurs';
 
-// Inclusion de l'en-tête du back-office
 include($racine_path . "templates/back/header.php");
-
-// Ouverture de la balise <main> avec la classe CSS "padding_dashboard"
 echo '<main class="padding_dashboard">';
 
+// Connexion à la BDD
+require_once($racine_path . "model/GestionBD.php");
+require_once($racine_path . "model/Produit_lp.php");
+require_once($racine_path . "model/User_lp.php");
+
+use bd\GestionBD;
+use classe\Produit_lp;
+use classe\User_lp;
+
+$gestion = new GestionBD(); // ✅ Maintenant ça fonctionne
+$pdo = $gestion->getPDO();
+
+
+
+//1ere partie 
+/*
 // Définition des données des produits sous forme de tableau associatif
 $products = [
     [
@@ -38,6 +43,30 @@ $users = [
         'role' => 'Admin'
     ]
 ];
+*/
+
+
+
+// 2eme partie
+
+
+// ✅ Connexion via l’objet
+$gestion = new GestionBD();
+$pdo = $gestion->getPDO();
+
+// ✅ Récupération des données produits (méthode à créer dans GestionBD)
+$stmt1 = $pdo->query("SELECT * FROM produit_lp");
+$products = $stmt1->fetchAll(\PDO::FETCH_ASSOC);
+
+// ✅ Récupération des utilisateurs (méthode à créer dans GestionBD)
+$stmt2 = $pdo->query("SELECT * FROM utilisateurs");
+$users = $stmt2->fetchAll(\PDO::FETCH_ASSOC);
+
+
+
+
+// Inclusion du template pour l'affichage de la fiche produit
+include($racine_path . "templates/back/product.php");
 
 // Inclusion du template pour l'affichage du dashboard (cartes, tableaux, etc.)
 include($racine_path . "templates/back/carte_dashboard.php");
