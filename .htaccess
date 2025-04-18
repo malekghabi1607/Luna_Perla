@@ -1,0 +1,87 @@
+# Activer la réécriture d'URL
+RewriteEngine on
+RewriteBase /~uapv2500231/Luna_Perla/
+# Page d'accueil
+RewriteRule ^$ index.php [L]
+
+# Produit avec ID numérique → /produit/5
+RewriteRule ^produit/([0-9]+)$ control/produit.php?id=$1 [L]
+
+# Fiche utilisateur admin → /admin/utilisateur/8
+#RewriteRule ^admin/utilisateur/([0-9]+)$ admin/control/modifier_user.php?id=$1 [L]
+
+# Panier → /panier
+RewriteRule ^panier$ control/panier.php [L]
+
+# Passer commande → /commander
+
+# Dashboard admin → /admin/dashboard
+RewriteRule ^admin/dashboard$ admin/control/dashboard.php [L]
+
+# Modifier produit admin → /admin/modifier-produit/12
+RewriteRule ^admin/modifier-produit/([0-9]+)$ admin/control/modifier_produit.php?id=$1 [L]
+
+# Compte utilisateur → /compte
+RewriteRule ^compte$ control/compte.php [L]
+
+
+# Best-sellers (réécrit vers le fichier PHP dans control/)
+RewriteRule ^best-sellers$ control/best-sellers.php [L]
+
+RewriteEngine on
+
+RewriteRule ^bijou-([0-9]+)$ control/bijou.php [L]
+
+
+# Page de confirmation après formulaire de contact
+RewriteRule ^confirmation-contact$ control/confirmation_contact.php [L]
+
+# Déconnexion → /logout
+RewriteRule ^logout$ control/logout.php [L]
+
+
+# Passer la commande (URL propre)
+
+# Vider le panier
+RewriteRule ^vider_panier$ control/vider_panier.php [L]
+
+RewriteRule ^passer_commande$ control/passer_commande.php [L]
+
+# Supprimer un produit (utilisateur connecté)
+RewriteRule ^supprimer-produit-panier/([0-9]+)/(.+)$ control/supprimer_produit.php?produit_id=$1&couleur=$2 [L]
+
+# Supprimer un produit (invité - index cookie)
+RewriteRule ^supprimer-produit-cookie/([0-9]+)$ control/supprimer_cookie.php?index=$1 [L]
+
+RewriteRule ^commander$ control/passer_commande.php [L]
+
+RewriteRule ^register$ control/register.php [L]
+
+RewriteRule ^login$ control/login.php [L]
+
+# Page des soldes → /soldes
+RewriteRule ^soldes$ control/soldes.php [L]
+
+RewriteRule ^ajout_panier$ control/ajout_panier.php [L]
+
+RewriteRule ^bijou-([0-9]+)$ control/bijou.php?id=$1 [L]
+
+RewriteRule ^collection$ control/collection.php [L]
+RewriteRule ^notre-histoire$ control/notre-histoire.php [L]
+
+RewriteRule ^bijou-([0-9]+)$ control/bijou.php?id=$1 [L]
+
+RewriteRule ^logout$ control/logout.php [L]
+
+RewriteRule ^contact$ control/contact_lp.php [L]
+
+RewriteRule ^confirmation$ control/confirmation_contact.php [L]
+RewriteRule ^confirmation_contact$ control/confirmation_contact.php [L]
+
+RewriteRule ^register$ control/register.php [L]
+RewriteRule ^login$ control/login.php [L]
+
+
+RewriteRule ^supprimer_produit/([0-9]+)/(.+)$ control/supprimer_produit.php?produit_id=$1&couleur=$2 [L]
+RewriteRule ^supprimer_produit/([0-9]+)$ control/supprimer_produit.php?index=$1 [L]
+RewriteRule ^obligations$ control/obligations.php [L]

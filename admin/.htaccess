@@ -1,0 +1,51 @@
+RewriteEngine On
+RewriteBase /~uapv2500231/Luna_Perla/admin/
+
+# 🏠 Accueil admin (index)
+RewriteRule ^$ control/accueil.php [L]
+
+RewriteRule ^$ index.php [L]
+
+
+# ✅ Compte utilisateur
+RewriteRule ^compte$ control/compte.php [L]
+RewriteRule ^account$ control/account.php [L]
+
+# ✅ Authentification
+RewriteRule ^login$ control/login.php [L]
+RewriteRule ^logout$ control/logout.php [L]
+RewriteRule ^register$ control/register.php [L]
+
+# ✅ F.A.Q
+RewriteRule ^FAQ$ control/FAQ.php [L]
+
+# ✅ Gestion utilisateurs
+RewriteRule ^ajout_user$ control/ajout_user.php [L]
+RewriteRule ^modifier_user-([0-9]+)$ control/modifier_user.php?id=$1 [L]
+RewriteRule ^delete_user-([0-9]+)$ control/delete_user.php?id=$1 [L]
+
+# ✅ Gestion produits
+RewriteRule ^ajout_produit$ control/ajout_produit.php [L]
+RewriteRule ^modifier_produit-([0-9]+)$ control/modifier_produit.php?id=$1 [L]
+RewriteRule ^delete_produit-([0-9]+)$ control/delete_product.php?id=$1 [L]
+
+# ✅ Bijou fiche admin
+RewriteRule ^bijou-([0-9]+)$ control/bijou.php?id=$1 [L]
+
+# ✅ Debug (optionnel)
+RewriteRule ^debug-person$ control/debug_person.php [L]
+
+RewriteRule ^dashboard$ control/dashboard.php [L]
+
+
+# Support /admin/index as a valid URL
+RewriteRule ^index$ index.php [L]
+
+
+# Redirection de /admin/accueil vers le fichier PHP
+RewriteRule ^accueil$ control/accueil.php [L]
+
+
+RewriteRule ^FAQ$ control/FAQ.php [L]
+
+RewriteRule ^documentation$ control/documentation.php [L]
