@@ -93,6 +93,8 @@ git clone https://github.com/tonrepo/LUNA_PERLA.git
 - Démarrer Apache et PostgreSQL.
 - Accéder au site via <http://localhost/LUNA_PERLA/>
 
+https://github.com/user-attachments/assets/0ea2bbac-3e89-4f5c-9817-f495dd6551fa
+
 ---
 
 ## 📚 Utilisation
